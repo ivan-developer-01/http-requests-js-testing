@@ -6,16 +6,49 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>XMLHttpRequest</title>
+	<style>
+		.cards {
+			display: grid;
+			grid-template-columns: repeat(5, 1fr);
+			gap: 10px;
+		}
+	
+		.card {
+			border: 1px solid black;
+			min-height: 250px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			max-width: 250px;
+		}
+	
+		img {
+			width: 250px;
+			height: 150px;
+		}
+	</style>
 </head>
 
 <body>
-	The data is logged into console.
+	<div class="cards">
+	
+	</div>
 
 	<script>
 		const xhr = new XMLHttpRequest();
 
 		xhr.onload = function () {
 			console.log(`Статус: ${xhr.status}; Результат: ${xhr.response}`)
+			const result = JSON.parse(xhr.response).slice(0, 10);
+			const cards = document.querySelector('.cards');
+
+			result.forEach(function (item) {
+				const card = document.createElement('div');
+				card.classList.add('card');
+				card.innerHTML = `<img src="${item.download_url}" alt="image"> <p>${item.author}</p>`;
+				cards.appendChild(card);
+			})
 		};
 
 		xhr.onprogress = function (event) {
