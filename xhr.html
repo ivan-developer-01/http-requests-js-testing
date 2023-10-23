@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>XMLHttpRequest</title>
+</head>
+
+<body>
+	The data is logged into console.
+
+	<script>
+		const xhr = new XMLHttpRequest();
+
+		xhr.onload = function () {
+			console.log(`Статус: ${xhr.status}; Результат: ${xhr.response}`)
+		};
+
+		xhr.onprogress = function (event) {
+			console.log(`Загружено ${event.loaded} из ${event.total}`);
+		};
+
+		xhr.onerror = function () {
+			console.log('Ошибка запроса');
+		};
+
+		xhr.open("get", "https://picsum.photos/v2/list", true);
+		xhr.send();
+	</script>
+</body>
+
+</html>
